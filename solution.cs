@@ -4,9 +4,6 @@ using System;
 using System.IO;
 
 class program{
-<<<<<<< HEAD
-
-    //test commit
 	public int currentTime = 0; //current tick, initialised to 0
 	public int availableCars; //number of cars not on rides
 	public ride[] rides; //array of rides
@@ -14,8 +11,6 @@ class program{
 	public int bonus; //number of bonus points for being early
 	public int timeRemaining; //number of ticks left
 	
-=======
->>>>>>> temp
 	static void Main(){
 		int currentTime = 0; //current tick, initialised to 0
 		int availableCars = 0; //number of cars not on rides
@@ -29,24 +24,20 @@ class program{
 	static void readIn(ref int availableCars, ref ride[] rides, ref car[] cars, ref int bonus, ref int timeRemaining){ //read data in from the .in file
 		string[] file = System.IO.File.ReadAllLines("a_example.in");
 		string[] currentLine = file[0].Split(' ');
-		for(int i = 0; i < 6; i++){
-			Console.WriteLine("{0} {1}", typeof(currentLine[i]), currentLine[i]);
-			// currentLine[i] = Int32.Parse(currentLine[i]);
+		availableCars = Int32.Parse(currentLine[2]);
+		cars = new car[Int32.Parse(currentLine[2])];
+		rides = new ride[Int32.Parse(currentLine[3])];
+		bonus = Int32.Parse(currentLine[4]);
+		timeRemaining = Int32.Parse(currentLine[5]);
+		for(int i = 1; i < file.Length; i++){
+			currentLine = file[i].Split(' ');
+			rides[i-1] = new ride();
+			rides[i-1].start = new int[2]{Int32.Parse(currentLine[0]), Int32.Parse(currentLine[1])};
+			rides[i-1].end = new int[2]{Int32.Parse(currentLine[2]), Int32.Parse(currentLine[3])};
+			rides[i-1].earliestStart = Int32.Parse(currentLine[4]);
+			rides[i-1].latestFinish = Int32.Parse(currentLine[5]);
+			//Console.WriteLine("Ride added. Start: {0}, End: {1}, Earliest Start: {2}, Latest Finish: {3}", rides[i-1].start, rides[i-1].end, rides[i-1].earliestStart, rides[i-1].latestFinish);
 		}
-		// availableCars = currentLine[2];
-		// cars = new car[currentLine[2]];
-		// rides = new ride[currentLine[3]];
-		// bonus = currentLine[4];
-		// timeRemaining = currentLine[5];
-		// for(int i = 1; i < file.Length; i++){
-			// currentLine = file[i].Split(' ');
-			// rides[i-1] = new ride();
-			// rides[i-1].start = new int[2]{currentLine[0], currentLine[1]};
-			// rides[i-1].end = new int[2]{currentLine[2], currentLine[3]};
-			// rides[i-1].earliestStart = currentLine[4];
-			// rides[i-1].latestFinish = currentLine[5];
-			// Console.WriteLine("Ride added. Start: {0}, End: {1}, Earliest Start: {2}, Latest Finish: {3}", rides[i-1].start, rides[i-1].end, rides[i-1].earliestStart, rides[i-1].latestFinish);
-		// }
 	}
 	
 	static int Distance(int[]carPos,int[]ridePos){
