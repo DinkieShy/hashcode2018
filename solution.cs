@@ -62,29 +62,32 @@ class program{
             for (int i = 0; i < cars.Length; i++)
             {
                 car Car = cars[i];
-                if (Car.busy)
-                {
-                    Car.move();
-                }
+                Car.move();
             }
 
             for (int i = 0; i < rides.Length; i++) {
                 ride Ride = ride[i];
-                if (!Ride.complete && Ride.earliestStart<=currentTime) {
+                if (!Ride.complete && !Ride.inCar && Ride.earliestStart<=currentTime) {
                     //find free cars
                     car nearestCar;
                     for (int j = 0; j < cars.Length; j++) {
                         car Car = cars[j];
                         if (!Car.busy)
                         {
-                            if (nearestCar == null || Distance(nearestCar, Ride) > Distance(Car, Ride)) {
+                            if (nearestCar == null || Distance(nearestCar, Ride.start) > Distance(Car, Ride.start)) {
                                 nearestCar = Car;
+                            }
+                            if (Distance(nearestCar, Ride) == 0) {
+                                Ride.inCar=true;
+                                nearestCar.busy=true;
+                                Car.destination = Ride.end;
+                                Car.Ride = Ride;
+                                break;
                             }
                         }
                     }
                     if (nearestCar != null) {
-                        nearestCar.busy;
-                        //TODO set ride for car
+                        Car.destination = Ride.start;
                     }
                 }
             }
@@ -103,11 +106,13 @@ class ride{
 	public int latestFinish; //latest finish time
 	
 	public bool complete = false;
+    public bool inCar = false;
 }
 
 class car{
     public int[] currentPos = new int[2] {0,0};
     public int[] destination = new int[2];
+    public ride Ride;
     public bool busy = false;
 	
 	public void move(){
