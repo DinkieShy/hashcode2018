@@ -62,40 +62,13 @@ class program{
             for (int i = 0; i < cars.Length; i++)
             {
                 car Car = cars[i];
-                if (Car.busy)
-                {
-                    if (!Car.currentPos[0].Equals(Car.destination[0]))
-                    {
-                        if (Car.currentPos[0] < Car.destination[0])
-                        {
-                            Car.currentPos[0]++;
-                        }
-                        else
-                        {
-                            Car.currentPos[0]--;
-                        }
-                    }
-                    else if (!Car.currentPos[1].Equals(Car.destination[1]))
-                    {
-                        if (Car.currentPos[1] < Car.destination[1])
-                        {
-                            Car.currentPos[1]++;
-                        }
-                        else
-                        {
-                            Car.currentPos[1]--;
-                        }
-                    }
-                }
-                if (Car.currentPos[0].Equals(Car.destination[0]) && Car.currentPos[1].Equals(Car.destination[1]))
-                {
-                    Car.busy = false;
-                }
+                Car.move();
             }
             currentTime++;
             timeRemaining--;
         }
 	}
+
 }
 
 class ride{
@@ -112,4 +85,36 @@ class car{
     public int[] currentPos = new int[2] {0,0};
     public int[] destination = new int[2];
     public bool busy = false;
+
+    public void move() {
+        if (busy)
+        {
+            if (!currentPos[0].Equals(destination[0]))
+            {
+                if (currentPos[0] < destination[0])
+                {
+                    currentPos[0]++;
+                }
+                else
+                {
+                    currentPos[0]--;
+                }
+            }
+            else if (!currentPos[1].Equals(destination[1]))
+            {
+                if (currentPos[1] < destination[1])
+                {
+                    currentPos[1]++;
+                }
+                else
+                {
+                    currentPos[1]--;
+                }
+            }
+        }
+        if (currentPos[0].Equals(destination[0]) && currentPos[1].Equals(destination[1]))
+        {
+            busy = false;
+        }
+    }
 }
