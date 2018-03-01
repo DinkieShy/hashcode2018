@@ -56,7 +56,45 @@ class program{
 	}
 	
 	public void advance(){
-		//advance 1 tick
+        //advance 1 tick
+        while (timeRemaining > 0)
+        {
+            for (int i = 0; i < cars.Length; i++)
+            {
+                car Car = cars[i];
+                if (Car.busy)
+                {
+                    if (!Car.currentPos[0].Equals(Car.destination[0]))
+                    {
+                        if (Car.currentPos[0] < Car.destination[0])
+                        {
+                            Car.currentPos[0]++;
+                        }
+                        else
+                        {
+                            Car.currentPos[0]--;
+                        }
+                    }
+                    else if (!Car.currentPos[1].Equals(Car.destination[1]))
+                    {
+                        if (Car.currentPos[1] < Car.destination[1])
+                        {
+                            Car.currentPos[1]++;
+                        }
+                        else
+                        {
+                            Car.currentPos[1]--;
+                        }
+                    }
+                }
+                if (Car.currentPos[0].Equals(Car.destination[0]) && Car.currentPos[1].Equals(Car.destination[1]))
+                {
+                    Car.busy = false;
+                }
+            }
+            currentTime++;
+            timeRemaining--;
+        }
 	}
 }
 
