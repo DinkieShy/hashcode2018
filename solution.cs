@@ -4,6 +4,7 @@ using System;
 using System.IO;
 
 class program{
+    public string[] files = new string[] { "a_example.in", "b_should_be_easy.in", "c_no_hurry.in", "d_metropolis.in", "e_high_bonus.in" };
 	public int currentTime = 0; //current tick, initialised to 0
 	public int availableCars; //number of cars not on rides
 	public ride[] rides; //array of rides
@@ -22,7 +23,7 @@ class program{
 	}
 	
 	static void readIn(ref int availableCars, ref ride[] rides, ref car[] cars, ref int bonus, ref int timeRemaining){ //read data in from the .in file
-		string[] file = System.IO.File.ReadAllLines("a_example.in");
+		string[] file = System.IO.File.ReadAllLines(files[0]);
 		string[] currentLine = file[0].Split(' ');
 		availableCars = Int32.Parse(currentLine[2]);
 		cars = new car[Int32.Parse(currentLine[2])];
