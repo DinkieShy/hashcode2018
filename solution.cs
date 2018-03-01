@@ -62,7 +62,31 @@ class program{
             for (int i = 0; i < cars.Length; i++)
             {
                 car Car = cars[i];
-                Car.move();
+                if (Car.busy)
+                {
+                    Car.move();
+                }
+            }
+
+            for (int i = 0; i < rides.Length; i++) {
+                ride Ride = ride[i];
+                if (!Ride.complete && Ride.earliestStart<=currentTime) {
+                    //find free cars
+                    car nearestCar;
+                    for (int j = 0; j < cars.Length; j++) {
+                        car Car = cars[j];
+                        if (!Car.busy)
+                        {
+                            if (nearestCar == null || Distance(nearestCar, Ride) > Distance(Car, Ride)) {
+                                nearestCar = Car;
+                            }
+                        }
+                    }
+                    if (nearestCar != null) {
+                        nearestCar.busy;
+                        //TODO set ride for car
+                    }
+                }
             }
             currentTime++;
             timeRemaining--;
@@ -87,34 +111,31 @@ class car{
     public bool busy = false;
 	
 	public void move(){
-        if (busy)
+        if (currentPos[0] != destination[0])
         {
-            if (currentPos[0] != destination[0])
+            if (currentPos[0] < destination[0])
             {
-                if (currentPos[0] < destination[0])
-                {
-                    currentPos[0] += 1;
-                }
-                else
-                {
-                    currentPos[0] -= 1;
-                }
+                currentPos[0] += 1;
             }
             else
             {
-                if (currentPos[1] < destination[1])
-                {
-                    currentPos[1] += 1;
-                }
-                else
-                {
-                    currentPos[1] -= 1;
-                }
-            }
-            if (currentPos[0] == destination[0] && currentPos[1] == destination[1])
-            {
-                busy = false;
+                currentPos[0] -= 1;
             }
         }
-	}
+        else
+        {
+            if (currentPos[1] < destination[1])
+            {
+                currentPos[1] += 1;
+            }
+            else
+            {
+                currentPos[1] -= 1;
+            }
+        }
+        if (currentPos[0] == destination[0] && currentPos[1] == destination[1])
+        {
+            busy = false;
+        }
+    }
 }
