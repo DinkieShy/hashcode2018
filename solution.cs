@@ -85,36 +85,36 @@ class car{
     public int[] currentPos = new int[2] {0,0};
     public int[] destination = new int[2];
     public bool busy = false;
-
-    public void move() {
+	
+	public void move(){
         if (busy)
         {
-            if (!currentPos[0].Equals(destination[0]))
+            if (currentPos[0] != destination[0])
             {
                 if (currentPos[0] < destination[0])
                 {
-                    currentPos[0]++;
+                    currentPos[0] += 1;
                 }
                 else
                 {
-                    currentPos[0]--;
+                    currentPos[0] -= 1;
                 }
             }
-            else if (!currentPos[1].Equals(destination[1]))
+            else
             {
                 if (currentPos[1] < destination[1])
                 {
-                    currentPos[1]++;
+                    currentPos[1] += 1;
                 }
                 else
                 {
-                    currentPos[1]--;
+                    currentPos[1] -= 1;
                 }
             }
+            if (currentPos[0] == destination[0] && currentPos[1] == destination[1])
+            {
+                busy = false;
+            }
         }
-        if (currentPos[0].Equals(destination[0]) && currentPos[1].Equals(destination[1]))
-        {
-            busy = false;
-        }
-    }
+	}
 }
