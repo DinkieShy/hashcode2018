@@ -4,29 +4,52 @@ using System;
 using System.IO;
 
 class program{
-	public int currentTime = 0; //current tick, initialised to 0
-	public int availableCars; //number of cars not on rides
-	public ride[] rides; //array of rides
-	public car[] cars; //array of cars
-	public int bonus; //number of bonus points for being early
-	public int timeRemaining; //number of ticks left
-	
 	static void Main(){
-		
+		int currentTime = 0; //current tick, initialised to 0
+		int availableCars = 0; //number of cars not on rides
+		ride[] rides = new ride[1]; //array of rides
+		car[] cars = new car[1]; //array of cars
+		int bonus = 0; //number of bonus points for being early
+		int timeRemaining = 0; //number of ticks left
+		readIn(ref availableCars, ref rides, ref cars, ref bonus, ref timeRemaining);
 	}
 	
-	static void readIn(){ //read data in from the .in file
+	static void readIn(ref int availableCars, ref ride[] rides, ref car[] cars, ref int bonus, ref int timeRemaining){ //read data in from the .in file
 		string[] file = System.IO.File.ReadAllLines("a_example.in");
 		string[] currentLine = file[0].Split(' ');
 		for(int i = 0; i < 6; i++){
-			currentLine[i] = Convert.ToInt32(currentLine[i]);
+			Console.WriteLine("{0} {1}", typeof(currentLine[i]), currentLine[i]);
+			// currentLine[i] = Int32.Parse(currentLine[i]);
 		}
-		availableCars = currentLine[2];
-		cars = new car[currentLine[2]];
-		rides = new ride[currentLine[3]];
-		bonus = currentLine[4];
-		timeRemaining = currentLine[5];
+		// availableCars = currentLine[2];
+		// cars = new car[currentLine[2]];
+		// rides = new ride[currentLine[3]];
+		// bonus = currentLine[4];
+		// timeRemaining = currentLine[5];
+		// for(int i = 1; i < file.Length; i++){
+			// currentLine = file[i].Split(' ');
+			// rides[i-1] = new ride();
+			// rides[i-1].start = new int[2]{currentLine[0], currentLine[1]};
+			// rides[i-1].end = new int[2]{currentLine[2], currentLine[3]};
+			// rides[i-1].earliestStart = currentLine[4];
+			// rides[i-1].latestFinish = currentLine[5];
+			// Console.WriteLine("Ride added. Start: {0}, End: {1}, Earliest Start: {2}, Latest Finish: {3}", rides[i-1].start, rides[i-1].end, rides[i-1].earliestStart, rides[i-1].latestFinish);
+		// }
+	}
+	
+	static int Distance(int[]carPos,int[]ridePos){
+		int dist = 0;
 		
+		int xdist = carPos[0] - ridePos[0];
+		if(xdist<0){
+			xdist *= -1;
+		}
+		int ydist = carPos[1] - ridePos[1];
+		if(ydist<0){
+			ydist *= -1;
+		}
+		dist = xdist + ydist;
+		return dist;
 	}
 	
 	public void advance(){
@@ -35,8 +58,8 @@ class program{
 }
 
 class ride{
-	public int[] start = new int[2]{0, 0}; //start pos
-	public int[] endX = new int[2]{0, 0}; //end pos
+	public int[] start; //start pos
+	public int[] end; //end pos
 	
 	public int earliestStart; //earliest start time
 	public int latestFinish; //latest finish time
